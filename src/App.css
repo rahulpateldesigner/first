@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.productCards .card{ scale: 1; transition-duration:.2s;-moz-transition-duration:.2s;-webkit-transition-duration:.2s;-o-transition-duration:.2s; cursor: pointer;}
+.productCards .card:hover{ scale: 1.03;}
+.productCards .card-img-top {  max-height: 200px;  object-fit: contain;}
