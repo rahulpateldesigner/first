@@ -1,9 +1,13 @@
-import React from 'react'
-
+import React, { useContext } from 'react'
+import { ThemeContext } from "../../global/Contexts";
 const Footer = () => {
+  const {theme} = useContext(ThemeContext);
   return (
-    <div>
-      <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 px-3 bg-dark mt-4 border-top" data-bs-theme="dark">
+    <footer
+      className="navbar navbar-expand-lg bg-body-tertiary border-top"
+      data-bs-theme={theme}
+    >
+      <div className="d-flex w-100 px-3 flex-wrap justify-content-between align-items-center">
     <div className="col-md-4 d-flex align-items-center">
       <a href="/" className="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
         Sarth's Stor
@@ -11,8 +15,8 @@ const Footer = () => {
       </div>
       <div className="mb-3 mb-md-0 text-body-secondary">© 2024 Company, Inc</div>
     
-  </footer>
-    </div>
+  </div>
+    </footer>
   )
 }
 

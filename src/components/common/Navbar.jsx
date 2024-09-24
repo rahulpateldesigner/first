@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import cartIcon from "../../assets/cart-icon-white.svg";
+import thememodeicon from "../../assets/theme-mode-icon.png";
+import { CartitemContext, ThemeContext } from "../../global/Contexts";
+
 const Navbar = () => {
-  return (
+  const {theme, setTheme} = useContext(ThemeContext);
+  const {cartItems, setCartItems} = useContext(CartitemContext);
+
+  return (     
     <nav
-      className="navbar navbar-expand-lg bg-body-tertiary"
-      data-bs-theme="dark"
+      className="navbar navbar-expand-lg bg-body-tertiary border-bottom"
+      data-bs-theme={theme}
     >
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           Sarth's Store
+          {console.log('theme' + theme)}
+          {console.log('cartItems' + cartItems)}
         </Link>
         <button
           className="navbar-toggler"
@@ -67,6 +76,19 @@ const Navbar = () => {
               </ul>
             </li>
           </ul>
+          <span className="themeMode mx-3">
+          <img onClick={()=>{setTheme(theme==='light'?'dark':'light')}} role="button" width={30} style={{'filter':'invert(.5)'}} height={30} src={thememodeicon} alt="" />
+          </span>
+          <span
+            className="viewCart"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample"
+            aria-controls="offcanvasExample"
+          >
+            <img  src={cartIcon} alt="" />
+          </span>
+          
         </div>
       </div>
     </nav>
