@@ -1,10 +1,21 @@
-import React, { useContext } from 'react'
-import { ThemeContext } from "../../global/Contexts";
+import React, { useContext } from "react";
+import { ThemeContext, CartitemContext } from "../../global/Contexts";
+import deleteicon from "../../assets/cross-icon.webp";
 
 const CartCanvas = () => {
-    const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
+  const { cartItems, setCartItems } = useContext(CartitemContext);
+
+  const handleDeletecart = (index)=>{    
+    // Create a new array without the item at the specified index
+    const newItems = [...cartItems];
+  newItems.splice(index, 1);
+    setCartItems(newItems)
+  }
+
   return (
     <div>
+      {/* {console.log(cartItems)} */}
       <div
         className="offcanvas offcanvas-end"
         data-bs-theme={theme}
@@ -24,35 +35,35 @@ const CartCanvas = () => {
           ></button>
         </div>
         <div className="offcanvas-body">
-          <div>
-            Some text as placeholder. In real life you can have the elements you
-            have chosen. Like, text, images, lists, etc.
-          </div>
-          <div className="dropdown mt-3">
-            <button
-              className="btn btn-secondary dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-            >
-              Dropdown button
-            </button>
-            <ul className="dropdown-menu">
-              <li>
-                <a className="dropdown-item" href="/">
-                  Action
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="/">
-                  Another action
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="/">
-                  Something else here
-                </a>
-              </li>
-            </ul>
+          <div className="container">
+            {!cartItems
+              ? "Nothing to Show"
+              : cartItems.map((e, index) => {
+                  return (
+                    <div className="card mb-2 bg-light text-dark">
+                      <div className="row card-body p-3 gy-0 gx-2">
+                        <div className="col-3">
+                          <img width="100%" src={e.image} alt={e.title} />
+                        </div>
+                        <div className="col-8">
+                          <p className="fw-semibold lh-sm mb-1">{e.title}</p>
+                          <p className="mb-1 text-secondary">
+                            Price: ₹{e.price}/-
+                          </p>
+                          <p className="mb-1 text-secondary">Qty: {e.qty}</p>
+                        </div>
+                        <div className="col-1">
+                          <img onClick={()=>{handleDeletecart(index)}}
+                            width={"15px"}
+                            role="button"
+                            src={deleteicon}
+                            alt="delete"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
           </div>
         </div>
       </div>

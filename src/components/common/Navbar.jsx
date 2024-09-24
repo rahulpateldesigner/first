@@ -2,11 +2,10 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import cartIcon from "../../assets/cart-icon-white.svg";
 import thememodeicon from "../../assets/theme-mode-icon.png";
-import { CartitemContext, ThemeContext } from "../../global/Contexts";
+import { ThemeContext } from "../../global/Contexts";
 
 const Navbar = () => {
   const {theme, setTheme} = useContext(ThemeContext);
-  const {cartItems, setCartItems} = useContext(CartitemContext);
 
   return (     
     <nav
@@ -16,8 +15,6 @@ const Navbar = () => {
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           Sarth's Store
-          {console.log('theme' + theme)}
-          {console.log('cartItems' + cartItems)}
         </Link>
         <button
           className="navbar-toggler"

@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import { CartitemContext } from "../../global/Contexts";
+import loadingImg from "../../assets/loading-bar.gif";
 
 const ProductDetails = () => {
   const [productDetail, setProductDetail] = useState();
+  const inputRef = useRef(1);
+  // const [prodQty, setProdQty] = useState({'qty': 1 });
+  // const [itemwithQty, setItemwithQty] = useState();
+  const { cartItems, setCartItems } = useContext(CartitemContext);
 
   const { id } = useParams();
-
-  // if(categoery==="women-clothing"){
-  //   categoery = "women's clothing";
-  // }else if(categoery==="men-clothing"){
-  //   categoery = "men's clothing";
-  // }
 
   const fatchdata = async () => {
     setProductDetail();
@@ -22,13 +22,24 @@ const ProductDetails = () => {
   useEffect(() => {
     fatchdata();
     // eslint-disable-next-line
-  }, [id]);
+  }, []);
+
+  
+  const handleAddtoCart = (data) => {
+    const setItemwithQty = Object.assign(productDetail, {
+      qty: Number(inputRef.current.value),
+    });
+    
+    const uniqueArray = Array.from(new Set((cartItems.concat(setItemwithQty)).map(JSON.stringify))).map(JSON.parse);
+
+   // setCartItems(Array.from(new Set(cartItems.map(JSON.stringify))).map(JSON.parse).concat(setItemwithQty));
+    setCartItems(uniqueArray);
+  };
 
   return (
     <div className="container my-5 py-5">
-      {/* {console.log(productDetail)} */}
       {!productDetail ? (
-        "loading"
+        <img src={loadingImg} alt="loading..." />
       ) : (
         <>
           <div className="row justify-content-start">
@@ -46,11 +57,32 @@ const ProductDetails = () => {
               <h1 className="mb-3">{productDetail.title} </h1>
               <p>{productDetail.description}</p>
               <p className="fs-5">Price: ₹{productDetail.price}/-</p>
+              <div className="mb-2">
+                Qty -{" "}
+                <input
+                  ref={inputRef}
+                  defaultValue={1}
+                  placeholder={1}
+                  type="number"
+                  name="age"
+                  min={1}
+                  max={10}
+                />{" "}
+              </div>
               <p>
                 Rated: {productDetail.rating.rate}/5 - by{" "}
                 {productDetail.rating.count} Customer
               </p>
-              <button type="button" className="btn btn-success">
+              <button
+                onClick={() => {
+                  handleAddtoCart(productDetail);
+                }}
+                type="button"
+                className="btn btn-success"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasExample"
+                aria-controls="offcanvasExample"
+              >
                 Add to Cart
               </button>
             </div>

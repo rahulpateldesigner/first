@@ -16,8 +16,8 @@ import { CartitemContext, ThemeContext } from './global/Contexts';
 
 function App() {     
   const [theme, setTheme] = useState('dark');
-  const [cartItems, setCartItems] = useState({});
-
+  const [cartItems, setCartItems] = useState([]);
+ 
   return (
     <>
     <Router>
